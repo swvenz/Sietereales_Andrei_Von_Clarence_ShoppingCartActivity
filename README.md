@@ -7,9 +7,9 @@ Current Function:
 - The program works.
 - Browse function works.
 - Spree Cart Function works.
+- Fixed Cart Function works.
 
 Funtions and Update to be added later:
-- Fixed Cart Function to be further fix.
 - Discount function to be added.
 - Update Receipt text format.
 - Add more Products to the array.
