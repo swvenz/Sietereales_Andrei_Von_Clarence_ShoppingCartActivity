@@ -94,123 +94,6 @@ namespace ShoppingCart
                             if (productID == 0)
                             {
                                 Console.WriteLine("Proceeding to checkout...");
-                                break; 
-                            }
-
-                            // Find the product with the given ID
-                            Product selectbook = null;
-                            foreach (var book in books)
-                            {
-                                if (book.ID == productID)
-                                {
-                                    selectbook = book;
-                                }
-                            }
-
-                            if (selectbook == null)
-                            {
-                                Console.WriteLine("Book ID does not match with any book. Choose a valid book ID.");
-                                continue;
-                            }
-
-                            int quantitybook;   
-                            while (true)
-                            {
-                                // Quantity of the book to add to the cart
-                                Console.Write($"Enter the quantity for '{selectbook.Name}': ");
-                                string bookquantity = Console.ReadLine();
-                                if (!int.TryParse(bookquantity, out quantitybook) || quantitybook <= 0)
-                                {
-                                    Console.WriteLine("Invalid input. Please enter a valid quantity.");
-                                    continue;
-                                }
-
-                                if (quantitybook > selectbook.RemainingStock)
-                                {
-                                    Console.WriteLine($"Only {selectbook.RemainingStock} copies of '{selectbook.Name}' are available.");
-                                    continue;
-                                }
-                                break;
-                            }
-                   
-                            //Add to cart
-                            Cart cartItem = new Cart { Item = selectbook, Quantity = quantitybook };
-                            spreeCart.Add(cartItem);
-
-                            //Reduce the stock of the book
-                            selectbook.RemainingStock -= quantitybook;
-                            Console.WriteLine($"Added {quantitybook}x copies of '{selectbook.Name}' to the cart.");
-                            Console.WriteLine();
-                        }
-                            //Shows the total price of the cart after each addition.
-                            double totalPrice = 0;
-                            Console.WriteLine("\nYour Spree Cart:");
-                            Console.WriteLine();
-                            Console.WriteLine("-----RECEIPT-----");
-                            foreach (var item in spreeCart)
-                            {
-                                double totalitem = item.Item.Price * item.Quantity;
-                                totalPrice += totalitem;
-                                Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
-                            }
-                            Console.WriteLine($"Total Price: ${totalPrice}");
-
-                            //Update the stock of the books after checkout and shows the remaining stock of each book.
-                            Console.WriteLine("\nUpdated Stock of Books");
-                            foreach (var book in books)
-                            {
-                                Console.WriteLine($"Book ID: {book.ID}, Title: {book.Name}, Remaining Stock: {book.RemainingStock}");
-                            }
-
-                            //Ask the user if they want to continue shopping or exit the program after checkout.
-                            Console.Write("\nContinue shopping? ( Y / N ): ");
-                            string answer = Console.ReadLine();
-                            
-                            if (answer == "Y")
-                                {
-                                    break;
-                                }
-
-                            if (answer == "N")
-                                {
-                                    Console.WriteLine("Thank you. Come Again!");
-                                    loop = -1;
-                                }
-
-                            else
-                                {
-                                    Console.WriteLine("Invalid input. Please enter 'Y' or 'N'.");
-                                }
-                            break;
-
-                    //FIXED CART option allows the user to add a fixed amount of products to their cart.
-                    case 3:
-                        Console.WriteLine("----------FIXED CART----------");
-                        Console.Write("How many products do you want to add?: ");
-                        string fixedproduct = Console.ReadLine();
-                        int fixedamount;
-                        if (!int.TryParse(fixedproduct, out fixedamount) || fixedamount <= 0)
-                        {
-                            Console.WriteLine("Invalid input. Enter a real number.");
-                            break;
-                        }
-
-                        List<Cart> fixedCart = new List<Cart>();
-                        int fixeditem = 0;
-                        while (fixeditem < fixedamount)
-                        {
-                            Console.Write("Enter the ID of the book (or type '0' to finish): ");
-                            string bookID = Console.ReadLine();
-                            int productID;
-                            if (!int.TryParse(bookID, out productID))
-                            {
-                                Console.WriteLine("Invalid input. Enter a valid book ID.");
-                                continue;
-                            }
-
-                            if (productID == 0)
-                            {
-                                Console.WriteLine("Proceeding to checkout...");
                                 break;
                             }
 
@@ -252,34 +135,178 @@ namespace ShoppingCart
 
                             //Add to cart
                             Cart cartItem = new Cart { Item = selectbook, Quantity = quantitybook };
-                            fixedCart.Add(cartItem);
+                            spreeCart.Add(cartItem);
 
                             //Reduce the stock of the book
                             selectbook.RemainingStock -= quantitybook;
                             Console.WriteLine($"Added {quantitybook}x copies of '{selectbook.Name}' to the cart.");
                             Console.WriteLine();
+                        }
+                        //Shows the total price of the cart after each addition.
+                        double totalPrice = 0;
+                        Console.WriteLine("\nYour Spree Cart:");
+                        Console.WriteLine();
+                        Console.WriteLine("-----RECEIPT-----");
+                        foreach (var item in spreeCart)
+                        {
+                            double totalitem = item.Item.Price * item.Quantity;
+                            totalPrice += totalitem;
+                            Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
+                        }
+                        Console.WriteLine($"Total Price: ${totalPrice}");
 
-                            //Shows the total price of the cart after each addition.
-                            double totalPriceFixed = 0;
-                            Console.WriteLine("\nYour Fixed Cart:");
-                            Console.WriteLine();
-                            Console.WriteLine("-----RECEIPT-----");
-                            foreach (var item in fixedCart)
+                        //Update the stock of the books after checkout and shows the remaining stock of each book.
+                        Console.WriteLine("\nUpdated Stock of Books");
+                        foreach (var book in books)
+                        {
+                            Console.WriteLine($"Book ID: {book.ID}, Title: {book.Name}, Remaining Stock: {book.RemainingStock}");
+                        }
+
+                        //Ask the user if they want to continue shopping or exit the program after checkout.
+                        while (true)
+                        {
+                            Console.Write("\nContinue shopping? ( y / n ): ");
+                            string answer = Console.ReadLine();
+
+                            if (answer == "y")
                             {
-                                double totalitem = item.Item.Price * item.Quantity;
-                                totalPriceFixed += totalitem;
-                                Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
+                                Console.WriteLine();
+                                break;
                             }
-                            Console.WriteLine($"Total Price: ${totalPriceFixed}");
 
-                            //Update the stock of the books after checkout and shows the remaining stock of each book.
-                            Console.WriteLine("\nUpdated Stock of Books");
-                            foreach (var book in books)
+                            else if (answer == "n")
                             {
-                                Console.WriteLine($"Book ID: {book.ID}, Title: {book.Name}, Remaining Stock: {book.RemainingStock}");
+                                Console.WriteLine("Thank you. Come Again!");
+                                loop = -1;
+                            }
+
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
+                                continue;
                             }
                         }
-                        
+                            break;
+
+                    //FIXED CART option allows the user to add a fixed amount of products to their cart.
+                    case 3:
+                        Console.WriteLine("----------FIXED CART----------");
+                        Console.Write("How many books do you want to add?: ");
+                        string fixedbook = Console.ReadLine();
+                        int fixedamount;
+                        if (!int.TryParse(fixedbook, out fixedamount) || fixedamount <= 0)
+                        {
+                            Console.WriteLine("Invalid input. Enter a real number.");
+                            break;
+                        }
+
+                        List<Cart> fixedCart = new List<Cart>();
+                        int fixeditem = 0;
+
+                        while (fixeditem < fixedamount)
+                        {
+                            Console.Write("Enter the ID of the book: ");
+                            string bookID = Console.ReadLine();
+                            int productID;
+                            if (!int.TryParse(bookID, out productID))
+                            {
+                                Console.WriteLine("Invalid input. Enter a valid book ID.");
+                                continue;
+                            }
+
+                            // Find the product with the given ID
+                            Product selectbook = null;
+                            foreach (var book in books)
+                            {
+                                if (book.ID == productID)
+                                {
+                                    selectbook = book;
+                                }
+                            }
+
+                            if (selectbook == null)
+                            {
+                                Console.WriteLine("Book ID does not match with any book. Choose a valid book ID.");
+                                continue;
+                            }
+
+                            int quantitybook;
+                            while (true)
+                            {
+                                Console.Write($"Enter the quantity for '{selectbook.Name}': ");
+                                string bookquantity = Console.ReadLine();
+                                if (!int.TryParse(bookquantity, out quantitybook) || quantitybook <= 0)
+                                {
+                                    Console.WriteLine("Invalid input. Please enter a valid quantity.");
+                                    continue;
+                                }
+
+                                if (quantitybook > selectbook.RemainingStock)
+                                {
+                                    Console.WriteLine($"Only {selectbook.RemainingStock} copies of '{selectbook.Name}' are available.");
+                                    continue;
+                                }
+                                break;
+                            }
+
+                            // Add to cart
+                            Cart cartItem = new Cart { Item = selectbook, Quantity = quantitybook };
+                            fixedCart.Add(cartItem);
+
+                            // Reduce stock
+                            selectbook.RemainingStock -= quantitybook;
+                            Console.WriteLine($"Added {quantitybook}x copies of '{selectbook.Name}' to the cart.");
+
+                            //Show the progress of adding books to the cart
+                            fixeditem++;
+                            Console.WriteLine($"Book: {fixeditem}/{fixedamount}");
+                            Console.WriteLine();
+                        }
+
+                        // Proceed to checkout only after cart is full
+                        double totalPriceFixed = 0;
+                        Console.WriteLine("\nYour Fixed Cart:");
+                        Console.WriteLine();
+                        Console.WriteLine("-----RECEIPT-----");
+                        foreach (var item in fixedCart)
+                        {
+                            double totalitem = item.Item.Price * item.Quantity;
+                            totalPriceFixed += totalitem;
+                            Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
+                        }
+                        Console.WriteLine($"Total Price: ${totalPriceFixed}");
+
+                        Console.WriteLine("\nUpdated Stock of Books");
+                        foreach (var book in books)
+                        {
+                            Console.WriteLine($"Book ID: {book.ID}, Title: {book.Name}, Remaining Stock: {book.RemainingStock}");
+                            Console.WriteLine();
+                        }
+
+                        //Ask the user if they want to continue shopping or exit the program after checkout.
+                        while (true)
+                        {
+                            Console.Write("\nContinue shopping? ( y / n ): ");
+                            string answer = Console.ReadLine();
+
+                            if (answer == "y")
+                            {
+                                Console.WriteLine();
+                                break;
+                            }
+
+                            else if (answer == "n")
+                            {
+                                Console.WriteLine("Thank you. Come Again!");
+                                loop = -1;
+                            }
+
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
+                                continue;
+                            }
+                        }
                         break;
 
                     case 4:
