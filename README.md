@@ -1,9 +1,8 @@
 # Shopping-Cart
 
-Hello there. I'm Andrei Von Clarence D. Sietereales of BSIT 1-1. This is submmission for the quiz 2 & 3 for the Computer Programming 2 Subject.
-These are the function of the finished and stable Shopping Cart Activity.
+Hello there. I'm Andrei Von Clarence D. Sietereales of BSIT 1-1. This is my submmission of the Shopping Cart Activity.
 
-Function of the Prgram:
+# Function of the Prgram:
 - Browse function.
 - Spree Cart Function.
 - Fixed Cart Function.
@@ -12,5 +11,13 @@ Function of the Prgram:
 - Updated Receipt text format.
 - Variety of Books / Products.
 - Minor function that lets the user continue browsing or not.
+
+# AI Usage
+I mostly watched Youtube videos and searched up C# Tutorial documents in the internet to learn and greatly challenged myself —literal challenge became very hard to be honest— to code it from the ground up.
+The only time I'ved used AI in this activity was for:
+- Figuring out the wrongs of code such as redundant code structure and missing codes
+- Learning how to properly use the while() function because that has been really confusing to code in my experience.
+
+
 
 
