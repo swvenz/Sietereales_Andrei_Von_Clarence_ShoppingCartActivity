@@ -9,7 +9,7 @@ Hello there. I'm Andrei Von Clarence D. Sietereales of BSIT 1-1. This is my subm
 - Discount function.
 - Real-time stock update.
 - Updated Receipt text format.
-- Variety of Books / Products.
+- Wide Variety of Books / Products.
 - Minor function that lets the user continue browsing or not.
 
 # AI Usage
