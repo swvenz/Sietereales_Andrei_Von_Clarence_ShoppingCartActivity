@@ -1,29 +1,40 @@
-﻿    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-    class Product
+class Product
+{
+    public int ID;
+    public string Name;
+    public string Author;
+    public double Price;
+    public int RemainingStock;
+
+    public void DisplayProduct()
     {
-        public int ID;
-        public string Name;
-        public string Author;
-        public double Price;
-        public int RemainingStock;
-
-        public void DisplayProduct()
-        {
-            Console.WriteLine($"Book ID: {ID}, Title: {Name}");
-            Console.WriteLine($"Price: ${Price}, Remaining Stock: {RemainingStock}");
-        }
+        Console.WriteLine($"Book ID: {ID}, Title: {Name}");
+        Console.WriteLine($"Price: ${Price}, Remaining Stock: {RemainingStock}");
     }
 
-
-    class Cart
+    public void HasEnoughStock()
     {
-        public Product Item;
-        public int Quantity;
-        public double TotalPrice()
+        if (RemainingStock > 20)
         {
-            return Item.Price * Quantity;
+            Console.WriteLine("Books have sufficient stock.");
+        }
+        else
+        {
+            Console.WriteLine("Book stock is currently low.");
+        }
+    }
+}
+
+class Cart
+{
+    public Product Item;
+    public int Quantity;
+    public double TotalPrice()
+    {
+        return Item.Price * Quantity;
     }
 }
 
@@ -86,6 +97,7 @@ namespace ShoppingCart
                         foreach (var book in books)
                         {
                             book.DisplayProduct();
+                            book.HasEnoughStock();
                             Console.WriteLine();
                         }
                         break;
@@ -219,7 +231,7 @@ namespace ShoppingCart
                                 continue;
                             }
                         }
-                            break;
+                        break;
 
                     //FIXED CART option allows the user to add a fixed amount of products to their cart.
                     case 3:
@@ -368,13 +380,9 @@ namespace ShoppingCart
                     default:
                         Console.WriteLine("Invalid option. Please choose a valid option.");
                         break;
-                }      
+                }
             }
         }
     }
 
 }
-            
-        
-    
-
