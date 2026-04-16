@@ -62,7 +62,7 @@ namespace ShoppingCart
                         new Product { ID = 10, Name = "Umamusume: Cinderalla Gray (Paperback)", Price = 530, RemainingStock = 40 },
                         new Product { ID = 11, Name = "Gachiakuta (Paperback)", Price = 520.25, RemainingStock = 40 },
                         new Product { ID = 12, Name = "Albus Changes The World (Paperback)", Price = 537, RemainingStock = 49 },
-                        new Product { ID = 13, Name = "Umamusume: Cinderalla Gray (Paperback)", Price = 530, RemainingStock = 40 },
+                        new Product { ID = 13, Name = "Go! Go! Loser Ranger! (Paperback)", Price = 530, RemainingStock = 40 },
                         new Product { ID = 14, Name = "Blue Lock (Paperback)", Price = 575, RemainingStock = 53 },
                         new Product { ID = 15, Name = "Chainsaw Man (Paperback)", Price = 554, RemainingStock = 45 },
                         new Product { ID = 16, Name = "Clevatess: The King of Magical Beasts, the Baby, and the Corpse Hero (Paperback)", Price = 524, RemainingStock = 35 },
