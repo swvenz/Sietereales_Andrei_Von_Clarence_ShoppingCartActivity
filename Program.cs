@@ -49,6 +49,22 @@ namespace ShoppingCart
                         new Product { ID = 7, Name = "Delicious in Dungeon (Paperback)", Price = 550, RemainingStock = 40 },
                         new Product { ID = 8, Name = "Sentenced to Be a Hero: The Prison Records of Penal Hero Unit 9004 (Light Novel)", Price = 670, RemainingStock = 50 },
                         new Product { ID = 9, Name = "86: Eighty Six (Light Novel)", Price = 640, RemainingStock = 45 },
+                        new Product { ID = 10, Name = "Umamusume: Cinderalla Gray (Paperback)", Price = 530, RemainingStock = 40 },
+                        new Product { ID = 11, Name = "Gachiakuta (Paperback)", Price = 520.25, RemainingStock = 40 },
+                        new Product { ID = 12, Name = "Albus Changes The World (Paperback)", Price = 537, RemainingStock = 49 },
+                        new Product { ID = 13, Name = "Umamusume: Cinderalla Gray (Paperback)", Price = 530, RemainingStock = 40 },
+                        new Product { ID = 14, Name = "Blue Lock (Paperback)", Price = 575, RemainingStock = 53 },
+                        new Product { ID = 15, Name = "Chainsaw Man (Paperback)", Price = 554, RemainingStock = 45 },
+                        new Product { ID = 16, Name = "Clevatess: The King of Magical Beasts, the Baby, and the Corpse Hero (Paperback)", Price = 524, RemainingStock = 35 },
+                        new Product { ID = 17, Name = "Gleipnir (Paperback)", Price = 490, RemainingStock = 30 },
+                        new Product { ID = 18, Name = "Kaiju No. 8 (Paperback)", Price = 540, RemainingStock = 45 },
+                        new Product { ID = 19, Name = "Goodnight Punpun (Paperback)", Price = 600, RemainingStock = 31 },
+                        new Product { ID = 20, Name = "Berserk (Omnibus)", Price = 650, RemainingStock = 37 },
+                        new Product { ID = 21, Name = "Tokyo Ghoul (Paperback)", Price = 540.60, RemainingStock = 45 },
+                        new Product { ID = 22, Name = "Tokyo Ghoul:re (Paperback)", Price = 554.25, RemainingStock = 47 },
+                        new Product { ID = 23, Name = "The Promised Neverland (Paperback)", Price = 567.25, RemainingStock = 40 },
+                        new Product { ID = 24, Name = "Orb: On the Movements of the Earth (Paperback)", Price = 590, RemainingStock = 40 },
+                        new Product { ID = 25, Name = "The Ancient Magus' Bride (Paperback)", Price = 580, RemainingStock = 40 },
                 };
 
                 Console.WriteLine("----------SHOSEKI ARCHIVES----------");
@@ -153,7 +169,24 @@ namespace ShoppingCart
                             totalPrice += totalitem;
                             Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
                         }
-                        Console.WriteLine($"Total Price: ${totalPrice}");
+
+                        // Applies a 10% discount if the total price of the cart is 5000 or more.
+                        if (totalPrice >= 5000)
+                        {
+                            Console.WriteLine($"\nTotal Price: ${totalPrice}");
+                            Console.WriteLine("Congratulations! You have received a 10% discount for spending $5000 above.");
+
+                            double discount = totalPrice * 0.10;
+                            double discountedPrice = totalPrice - discount;
+
+                            Console.WriteLine($"\nDiscount: ${discount}");
+                            Console.WriteLine($"Discounted Price: ${discountedPrice}");
+                        }
+
+                        else
+                        {
+                            Console.WriteLine($"Total Price: ${totalPrice}");
+                        }
 
                         //Update the stock of the books after checkout and shows the remaining stock of each book.
                         Console.WriteLine("\nUpdated Stock of Books");
@@ -176,8 +209,9 @@ namespace ShoppingCart
 
                             else if (answer == "n")
                             {
-                                Console.WriteLine("Thank you. Come Again!");
+                                Console.WriteLine("Thank you! Come Again!");
                                 loop = -1;
+                                break;
                             }
 
                             else
@@ -274,13 +308,30 @@ namespace ShoppingCart
                             totalPriceFixed += totalitem;
                             Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
                         }
-                        Console.WriteLine($"Total Price: ${totalPriceFixed}");
 
+                        // Applies a 10% discount if the total price of the cart is 5000 or more.
+                        if (totalPriceFixed >= 5000)
+                        {
+                            Console.WriteLine($"\nTotal Price: ${totalPriceFixed}");
+                            Console.WriteLine("Congratulations! You have received a 10% discount for spending $5000 above.");
+
+                            double discountfixed = totalPriceFixed * 0.10;
+                            double discountedPricefixed = totalPriceFixed - discountfixed;
+
+                            Console.WriteLine($"\nDiscount: ${discountfixed}");
+                            Console.WriteLine($"Discounted Price: ${discountedPricefixed}");
+                        }
+
+                        else
+                        {
+                            Console.WriteLine($"Total Price: ${totalPriceFixed}");
+                        }
+
+                        //Update the stock of the books after checkout and shows the remaining stock of each book.
                         Console.WriteLine("\nUpdated Stock of Books");
                         foreach (var book in books)
                         {
                             Console.WriteLine($"Book ID: {book.ID}, Title: {book.Name}, Remaining Stock: {book.RemainingStock}");
-                            Console.WriteLine();
                         }
 
                         //Ask the user if they want to continue shopping or exit the program after checkout.
@@ -309,8 +360,10 @@ namespace ShoppingCart
                         }
                         break;
 
+                    //Exits the program
                     case 4:
                         Console.WriteLine("Come Again!");
+                        loop = -1;
                         break;
 
                     default:
