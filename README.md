@@ -1,15 +1,16 @@
 # Shopping-Cart
 
-Hello there. I'm Andrei Von Clarence D. Sietereales of BSIT 1-1. 
-This is my current progress in my Shopping Cart Activity.
+Hello there. I'm Andrei Von Clarence D. Sietereales of BSIT 1-1. This is submmission for the quiz 2 & 3 for the Computer Programming 2 Subject.
+These are the function of the finished and stable Shopping Cart Activity.
 
-Current Function:
-- The program works.
-- Browse function works.
-- Spree Cart Function works.
-- Fixed Cart Function works.
+Function of the Prgram:
+- Browse function.
+- Spree Cart Function.
+- Fixed Cart Function.
+- Discount function.
+- Real-time stock update.
+- Updated Receipt text format.
+- Variety of Books / Products.
+- Minor function that lets the user continue browsing or not.
 
-Funtions and Update to be added later:
-- Discount function to be added.
-- Update Receipt text format.
-- Add more Products to the array.
+
