@@ -9,9 +9,9 @@ I only use AI for assistance and explanation on how to fix the code and to bette
 - What is the problem with the loop for asking the size of the cart?
 - Can you show me how to fix the checkout function if the array has an empty slot?
 Before:
-<img width="655" height="114" alt="2 After" src="https://github.com/user-attachments/assets/3c8e88fe-3245-4ce7-9830-3974c919ffab" />
+<img width="670" height="102" alt="2 Before" src="https://github.com/user-attachments/assets/499b23b7-6bdd-49a1-8cd8-783c86cd0fe4" />
 After:
-<img width="670" height="102" alt="2 Before" src="https://github.com/user-attachments/assets/499b23b7-6bdd-49a1-8cd8-783c86cd0fe4" /></br>
+<img width="655" height="114" alt="2 After" src="https://github.com/user-attachments/assets/3c8e88fe-3245-4ce7-9830-3974c919ffab" /></br>
 
 - How can I prevent duplication of product in an array?
 Before:
@@ -21,7 +21,7 @@ After:
 
 - Can you show me why is the function for updating quantity is looping the invalid input incorrectly?
 Before:
-<img width="679" height="622" alt="Screenshot 2026-04-29 150437" src="https://github.com/user-attachments/assets/131071bd-a19c-403a-81d2-e364a9cb1121" />
+<img width="692" height="527" alt="Screenshot 2026-04-29 150422" src="https://github.com/user-attachments/assets/3a3a84d2-1e60-4e77-9d54-0c7ad297e77c" />
 After:
-<img width="692" height="527" alt="Screenshot 2026-04-29 150422" src="https://github.com/user-attachments/assets/3a3a84d2-1e60-4e77-9d54-0c7ad297e77c" /></br>
+<img width="679" height="622" alt="Screenshot 2026-04-29 150437" src="https://github.com/user-attachments/assets/131071bd-a19c-403a-81d2-e364a9cb1121" /></br>
 
