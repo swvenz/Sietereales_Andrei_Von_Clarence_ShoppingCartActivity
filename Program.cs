@@ -5,7 +5,7 @@ class Product
 {
     public int ID;
     public string Name;
-    public string Author;
+    //public string Category;
     public double Price;
     public int RemainingStock;
 
@@ -21,12 +21,39 @@ class Product
         {
             Console.WriteLine("Books have sufficient stock.");
         }
+
         else
         {
             Console.WriteLine("Book stock is currently low.");
         }
     }
+
+    //Product Search 
+    public static void BookSearch(Product[] books)
+    {
+        Console.Write("Search Name: ");
+        string searchBook = Console.ReadLine().ToLower();
+        Console.WriteLine();
+
+        bool found = false;
+        foreach (var book in books)
+        {
+            if (book.Name.ToLower().Contains(searchBook))
+            {
+                book.DisplayProduct();
+                found = true;
+                Console.WriteLine();
+            }
+            
+        }
+
+        if (!found)
+        {
+            Console.WriteLine("No books found.");
+        }
+    }
 }
+
 
 class Cart
 {
@@ -37,12 +64,6 @@ class Cart
         return Item.Price * Quantity;
     }
 }
-
-class CartMenu
-{
-
-}
-
 
 namespace ShoppingCart
 {
@@ -82,6 +103,7 @@ namespace ShoppingCart
                         new Product { ID = 25, Name = "The Ancient Magus' Bride (Paperback)", Price = 580, RemainingStock = 40 },
                 };
 
+
                 Console.WriteLine("----------SHOSEKI ARCHIVES----------");
                 Console.WriteLine("1 - Browse");
                 Console.WriteLine("2 - Shop Cart");
@@ -94,17 +116,38 @@ namespace ShoppingCart
 
                 switch (choice)
                 {
+
                     //BROWSE option shows the available books with their details such as price and remaining stock.
                     case 1:
-                        Console.WriteLine("----------BROWSING AVAILABLE BOOKS----------");
+                        Console.WriteLine("----------BROWSE----------");
+                        Console.WriteLine("1 - Show List");
+                        Console.WriteLine("2 - Search Book");
+                        Console.Write("Choose an option: ");
+                        string browseoption = Console.ReadLine();
+                        int browsechoice;
+                        int.TryParse(browseoption, out browsechoice);
+                        Console.WriteLine();
 
-                        foreach (var book in books)
+                        switch (browsechoice)
                         {
-                            book.DisplayProduct();
-                            book.HasEnoughStock();
-                            Console.WriteLine();
+                                case 1:
+                                    Console.WriteLine("----------LIST OF AVAILABLE BOOKS----------");
+                                    foreach (var book in books)
+                                    {
+                                        book.DisplayProduct();
+                                        book.HasEnoughStock();
+                                        Console.WriteLine();
+                                    }
+                                    break;
+
+                                case 2:
+                                    Console.WriteLine("----------SEARCH BOOKS----------"); 
+                                    Product.BookSearch(books);
+                                    break;
                         }
                         break;
+                        
+                        
 
                     //SHOP CART option allows the user to add books to their cart.
                     case 2:
@@ -226,6 +269,7 @@ namespace ShoppingCart
                                 Console.WriteLine("Cart is full.\n");
                                 while (true)
                                 {
+                                    //Cart Management Menu
                                     Console.WriteLine("1 - View Cart");
                                     Console.WriteLine("2 - Remove Book");
                                     Console.WriteLine("3 - Update Book Quantity");
