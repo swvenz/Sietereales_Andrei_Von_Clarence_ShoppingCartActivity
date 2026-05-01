@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 class Product
 {
@@ -191,7 +192,7 @@ namespace ShoppingCart
                         new Product { ID = 37, Name = "A History of Western Philosophy", Price = 554, RemainingStock = 45, Category = "Non-Fiction" },  
                 };
 
-
+                
                 Console.WriteLine("----------SHOSEKI ARCHIVES----------");
                 Console.WriteLine("1 - Browse");
                 Console.WriteLine("2 - Shop Cart");
@@ -515,40 +516,107 @@ namespace ShoppingCart
                                                 Console.WriteLine("\nYour Cart:");
                                                 Console.WriteLine();
                                                 Console.WriteLine("-----RECEIPT-----");
+
                                                 foreach (var item in fixedCart)
                                                 {
                                                     if (item == null) continue;
                                                     double totalitem = item.Item.Price * item.Quantity;
                                                     totalPriceFixed += totalitem;
-                                                    Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
+                                                    Console.WriteLine($"{item.Quantity}x {item.Item.Name} ${item.Item.Price} = ${totalitem}");
                                                 }
 
-                                                // Applies a 10% discount if the total price of the cart is 5000 or more.
+                                            // Applies a 10% discount if the total price of the cart is 5000 or more.
+                                                double finalPrice = 0;
                                                 if (totalPriceFixed >= 5000)
                                                 {
-                                                    Console.WriteLine($"\nTotal Price: ${totalPriceFixed}");
-                                                    Console.WriteLine("Congratulations! You have received a 10% discount for spending $5000 or more.");
-
                                                     double discountfixed = totalPriceFixed * 0.10;
                                                     double discountedPricefixed = totalPriceFixed - discountfixed;
 
+                                                    Console.WriteLine($"\nTotal Price: ${totalPriceFixed}");
+                                                    Console.WriteLine("Congratulations! You have received a 10% discount for spending $5000 or more.");
                                                     Console.WriteLine($"\nDiscount: ${discountfixed}");
                                                     Console.WriteLine($"Discounted Price: ${discountedPricefixed}");
                                                 }
 
                                                 else
                                                 {
+                                                    finalPrice = totalPriceFixed;
                                                     Console.WriteLine($"Total Price: ${totalPriceFixed}");
                                                 }
 
-                                                //Update the stock of the books after checkout and shows the remaining stock of each book.
-                                                Console.WriteLine("\nUpdated Stock of Books");
+                                            //Checkout Payment Validation
+                                            double payment;
+                                            while (true)
+                                            {
+                                                Console.WriteLine();
+                                                Console.Write("Enter payment amount: ");
+                                                if (!double.TryParse(Console.ReadLine(), out payment) || payment <= 0)
+                                                {
+                                                    Console.WriteLine("Invalid payment. Enter a valid amount.");
+                                                    continue;
+                                                }
+
+                                                if (payment < finalPrice)
+                                                {
+                                                    Console.WriteLine($"Insufficient payment.");
+                                                    continue;
+                                                }
+
+                                                break;
+                                            }
+
+                                            //Use the final price of total books bought. If the total price is 5000 or more, the final price will be the discounted price. If not, the final price will just be the total price.
+                                            double change = payment - finalPrice;
+
+                                            //Generates a random receipt number for the transaction.
+                                            Random rnd = new Random();
+                                            List<int> numbers = new List<int>();
+                                            for (int i = 0; i < 10; i++)
+                                            {
+                                                numbers.Add(rnd.Next(1, 101)); 
+                                            }
+                                            numbers.Sort();
+
+                                            //Shows the current date and time.
+                                            DateTime current = DateTime.Now;
+
+                                            //The discount of the price
+                                            double discountfixed2nd = totalPriceFixed * 0.10;
+
+                                            //Final Receipt
+                                            Console.WriteLine("\n----- PAYMENT RECEIPT -----");
+                                            Console.WriteLine($"Receipt No: {string.Join("", numbers)}");
+                                            Console.WriteLine($"Date: {current}");
+
+                                            Console.WriteLine("Purchased Items:");
+                                            foreach (var item in fixedCart)
+                                            {
+                                                if (item == null) continue;
+                                                double totalitem = item.Item.Price * item.Quantity;
+                                                totalPriceFixed += totalitem;
+                                                Console.WriteLine($"{item.Quantity}x {item.Item.Name} ${item.Item.Price} = ${totalitem}");
+                                            }
+
+                                            Console.WriteLine($"Grand Total: ${totalPriceFixed}");
+                                            Console.WriteLine($"Discount: ${discountfixed2nd}");
+                                            Console.WriteLine($"Final Total: ${finalPrice}");
+                                            Console.WriteLine($"Paid: ${payment}");                                        
+                                            Console.WriteLine($"Change: ${change}");
+                                            Console.WriteLine("Payment Successful. Thank you for shopping in Shoseki Archives!");
+
+                                            //Update the stock of the books after checkout and shows the remaining stock of each book.
+                                            Console.WriteLine("\nUpdated Stock of Books");
                                                 foreach (var book in books)
                                                 {
                                                     Console.WriteLine($"Book ID: {book.ID}, Title: {book.Name}, Remaining Stock: {book.RemainingStock}");
+                                                }
 
+                                                foreach (var book in books)
+                                                {
                                                     if (book.RemainingStock <= 5)
                                                     {
+                                                        Console.WriteLine();
+                                                        Console.WriteLine("LOW STOCK ALERT");
                                                         Console.WriteLine($"{book.Name} has only {book.RemainingStock} remaining. Restock needed");
                                                     }
                                                 }
