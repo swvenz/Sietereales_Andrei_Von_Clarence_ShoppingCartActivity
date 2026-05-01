@@ -7,7 +7,8 @@ Continuation of the Shopping Cart Program.
 - Added Category Search for books
 - Added alert for low stock
 - Added Checkout Payment Validation
-- Updated Receipt details 
+- Updated Receipt details
+- Added Order History for previous transaction
 
 ## AI Usage:
 I only use AI for assistance and explanation on how to fix the code and to better understand the codes functionality and structure.
