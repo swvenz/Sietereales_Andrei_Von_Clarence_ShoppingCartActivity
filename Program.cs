@@ -5,7 +5,8 @@ class Product
 {
     public int ID;
     public string Name;
-    //public string Category;
+    public string Category;
+    public string Genre;
     public double Price;
     public int RemainingStock;
 
@@ -13,6 +14,13 @@ class Product
     {
         Console.WriteLine($"Book ID: {ID}, Title: {Name}");
         Console.WriteLine($"Price: ${Price}, Remaining Stock: {RemainingStock}");
+    }
+
+    public void DisplayProductFull()
+    {
+        Console.WriteLine($"Book ID: {ID}, Title: {Name}");
+        Console.WriteLine($"Price: ${Price}, Remaining Stock: {RemainingStock}");
+        Console.WriteLine($"Category: {Category}, Genre: {Genre}");
     }
 
     public void HasEnoughStock()
@@ -52,6 +60,66 @@ class Product
             Console.WriteLine("No books found.");
         }
     }
+
+    //Category Search
+    public static void CategorySearch(Product[] books)
+    {
+        Console.WriteLine("Category: Fiction");
+        Console.WriteLine("Category: Non-Fiction");
+        Console.Write("Choose Category: ");
+        string searchCategory = Console.ReadLine().ToLower();
+        Console.WriteLine();
+
+        bool found = false;
+        foreach (var book in books)
+        {
+            if(book.Category.ToLower() == searchCategory)
+            {
+                found = true;
+            }
+        }
+
+        if (!found)
+        {
+            Console.WriteLine("Category not found.");
+        }
+
+        //If the user chooses fiction, they can also search for the genre of the book.
+        if (searchCategory == "fiction")
+        {
+            Console.Write("Search Genre: ");
+            string searchGenre = Console.ReadLine().ToLower();
+            Console.WriteLine();
+
+            bool Genrefound = false;
+            foreach (var book in books)
+            {
+                //For now, nakalagay lang yung book.Genre != null kasi uunahin ko muna lahat nung quiz requirement bago ko ayusin yung genre update.
+                if (book.Category.ToLower() == "fiction" && book.Genre != null)
+                {
+                    //this .Split()...
+                    string[] genres = book.Genre.ToLower().Split(',');
+
+                    foreach (var genre in genres)
+                    {
+                        //...and .Trim() are both life savers 'cuz I was having a hard time splitting the genres.
+                        if (genre.Trim() == searchGenre)
+                        {
+                            book.DisplayProductFull();
+                            Console.WriteLine();
+                            Genrefound = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!Genrefound)
+            {
+                Console.WriteLine("Genre not found.");
+            }
+        }
+    }
 }
 
 
@@ -76,31 +144,51 @@ namespace ShoppingCart
             {
                 Product[] books = new Product[]
                 {
-                        new Product { ID = 1, Name = "Beastars (Paperback)", Price = 585, RemainingStock = 45},
-                        new Product { ID = 2, Name = "Fool Night (Paperback)", Price = 540, RemainingStock = 43},
-                        new Product { ID = 3, Name = "Choujin X (Paperback)", Price = 550, RemainingStock = 47},
-                        new Product { ID = 4, Name = "After God (Paperback)", Price = 580, RemainingStock = 50},
-                        new Product { ID = 5, Name = "PPPPPP (Paperback)", Price = 520, RemainingStock = 35},
-                        new Product { ID = 6, Name = "Soul Eater (Paperback)", Price = 600, RemainingStock = 39 },
-                        new Product { ID = 7, Name = "Delicious in Dungeon (Paperback)", Price = 550, RemainingStock = 40 },
-                        new Product { ID = 8, Name = "Sentenced to Be a Hero: The Prison Records of Penal Hero Unit 9004 (Light Novel)", Price = 670, RemainingStock = 50 },
-                        new Product { ID = 9, Name = "86: Eighty Six (Light Novel)", Price = 640, RemainingStock = 45 },
-                        new Product { ID = 10, Name = "Umamusume: Cinderalla Gray (Paperback)", Price = 530, RemainingStock = 40 },
-                        new Product { ID = 11, Name = "Gachiakuta (Paperback)", Price = 520.25, RemainingStock = 40 },
-                        new Product { ID = 12, Name = "Albus Changes The World (Paperback)", Price = 537, RemainingStock = 49 },
-                        new Product { ID = 13, Name = "Go! Go! Loser Ranger! (Paperback)", Price = 530, RemainingStock = 40 },
-                        new Product { ID = 14, Name = "Blue Lock (Paperback)", Price = 575, RemainingStock = 53 },
-                        new Product { ID = 15, Name = "Chainsaw Man (Paperback)", Price = 554, RemainingStock = 45 },
-                        new Product { ID = 16, Name = "Clevatess: The King of Magical Beasts, the Baby, and the Corpse Hero (Paperback)", Price = 524, RemainingStock = 35 },
-                        new Product { ID = 17, Name = "Gleipnir (Paperback)", Price = 490, RemainingStock = 30 },
-                        new Product { ID = 18, Name = "Kaiju No. 8 (Paperback)", Price = 540, RemainingStock = 45 },
-                        new Product { ID = 19, Name = "Goodnight Punpun (Paperback)", Price = 600, RemainingStock = 31 },
-                        new Product { ID = 20, Name = "Berserk (Omnibus)", Price = 650, RemainingStock = 37 },
-                        new Product { ID = 21, Name = "Tokyo Ghoul (Paperback)", Price = 540.60, RemainingStock = 45 },
-                        new Product { ID = 22, Name = "Tokyo Ghoul:re (Paperback)", Price = 554.25, RemainingStock = 47 },
-                        new Product { ID = 23, Name = "The Promised Neverland (Paperback)", Price = 567.25, RemainingStock = 40 },
-                        new Product { ID = 24, Name = "Orb: On the Movements of the Earth (Paperback)", Price = 590, RemainingStock = 40 },
-                        new Product { ID = 25, Name = "The Ancient Magus' Bride (Paperback)", Price = 580, RemainingStock = 40 },
+                    //FICTION
+                        //Manga
+                        new Product { ID = 1, Name = "Umamusume: Cinderalla Gray (Paperback)", Price = 530, RemainingStock = 40, Category = "Fiction", Genre = "Drama, Slice of Life, Sports" },
+                        new Product { ID = 2, Name = "Umamusume: Pretty Derby - Star Blossom (Paperback)", Price = 530, RemainingStock = 40, Category = "Fiction", Genre = $"Sports" },
+                        new Product { ID = 3, Name = "Beastars (Paperback)", Price = 585, RemainingStock = 45, Category = "Fiction", Genre = "Drama, Slice of Life, Romance, Dark Fantasy, Suspense, Mystery" },
+                        new Product { ID = 4, Name = "Fool Night (Paperback)", Price = 540, RemainingStock = 43, Category = "Fiction" },
+                        new Product { ID = 5, Name = "Choujin X (Paperback)", Price = 550, RemainingStock = 47, Category = "Fiction", Genre = "Action, Supernatural, Dark Fantasy, Thriller, Psychological" },
+                        new Product { ID = 6, Name = "Delicious in Dungeon (Paperback)", Price = 550, RemainingStock = 40, Category = "Fiction" },
+                        new Product { ID = 7, Name = "Soul Eater (Paperback)", Price = 600, RemainingStock = 39, Category = "Fiction" },
+                        new Product { ID = 8, Name = "The Ancient Magus' Bride (Paperback)", Price = 580, RemainingStock = 40, Category = "Fiction" },
+                        new Product { ID = 9, Name = "After God (Paperback)", Price = 580, RemainingStock = 50, Category = "Fiction" },
+                        new Product { ID = 10, Name = "PPPPPP (Paperback)", Price = 520, RemainingStock = 35, Category = "Fiction" },
+                        new Product { ID = 11, Name = "Clevatess: The King of Magical Beasts, the Baby, and the Corpse Hero (Paperback)", Price = 524, RemainingStock = 35, Category = "Fiction" },
+                        new Product { ID = 12, Name = "Tokyo Ghoul (Paperback)", Price = 540.60, RemainingStock = 45, Category = "Fiction" },
+                        new Product { ID = 13, Name = "Tokyo Ghoul:re (Paperback)", Price = 554.25, RemainingStock = 47, Category = "Fiction" },
+                        new Product { ID = 14, Name = "Dorohedoro (Paperback)", Price = 550, RemainingStock = 60, Category = "Fiction" },
+                        new Product { ID = 15, Name = "Made in Abyss (Paperback)", Price = 490, RemainingStock = 30, Category = "Fiction" },
+
+                        //Light Novel
+                        new Product { ID = 16, Name = "Sentenced to Be a Hero: The Prison Records of Penal Hero Unit 9004 (Light Novel)", Price = 670, RemainingStock = 50, Category = "Fiction"  },
+                        new Product { ID = 17, Name = "86: Eighty Six (Light Novel)", Price = 640, RemainingStock = 45, Category = "Fiction" },
+                        new Product { ID = 18, Name = "ReZero, Re: Life in a different world from zero (Light Novel)", Price = 600, RemainingStock = 60, Category = "Fiction" },
+                        new Product { ID = 19, Name = "Bungou Stray Dogs (Light Novel)", Price = 630, RemainingStock = 66, Category = "Fiction" },
+                        new Product { ID = 20, Name = "Baccano! (Light Novel)", Price = 580, RemainingStock = 50, Category = "Fiction" },
+                        new Product { ID = 21, Name = "Fate/strange Fake (Light Novel)", Price = 618, RemainingStock = 55, Category = "Fiction" },
+                        new Product { ID = 22, Name = "Too Many Losing Heroines! (Light Novel)", Price = 580, RemainingStock = 55, Category = "Fiction" },
+                        new Product { ID = 23, Name = "No Game No Life (Light Novel)", Price = 585, RemainingStock = 57, Category = "Fiction" },
+                        new Product { ID = 24, Name = "Grimoire Of Zero (Light Novel)", Price = 578, RemainingStock = 60, Category = "Fiction" },
+                        new Product { ID = 25, Name = "Konosuba: God's Blessing on This Wonderful World! (Light Novel)", Price = 570, RemainingStock = 60, Category = "Fiction" },
+
+                        //Other Novel
+                        new Product { ID = 26, Name = "The Shining ", Price = 690, RemainingStock = 50, Category = "Fiction" },
+                        new Product { ID = 27, Name = "Pet Sematary ", Price = 680, RemainingStock = 45, Category = "Fiction" },
+                        new Product { ID = 28, Name = "Harry Potter and the Sorcerer's Stone", Price = 600, RemainingStock = 60, Category = "Fiction" },
+                        new Product { ID = 29, Name = "Lord of the Rings - Fellowship of the Ring", Price = 700, RemainingStock = 66, Category = "Fiction" },
+                        new Product { ID = 30, Name = "Lord of the Rings - The Two Towers", Price = 715, RemainingStock = 66, Category = "Fiction" },
+                        new Product { ID = 31, Name = "Lord of the Rings - The Return of the King", Price = 720, RemainingStock = 66, Category = "Fiction" },
+                        new Product { ID = 32, Name = "The Hobbit", Price = 705, RemainingStock = 66, Category = "Fiction" },
+
+                    //NON-FICTION
+                        new Product { ID = 33, Name = "The Art of War", Price = 520.25, RemainingStock = 40, Category = "Non-Fiction" },
+                        new Product { ID = 34, Name = "Wolfish: Wolf, Self, and the Stories We Tell About Fear ", Price = 537, RemainingStock = 49, Category = "Non-Fiction" },
+                        new Product { ID = 35, Name = "The Merriam-Webster Dictionary", Price = 530, RemainingStock = 40, Category = "Non-Fiction" },
+                        new Product { ID = 36, Name = "The Subtle Art of Not Giving a F*ck", Price = 575, RemainingStock = 53, Category = "Non-Fiction" },
+                        new Product { ID = 37, Name = "A History of Western Philosophy", Price = 554, RemainingStock = 45, Category = "Non-Fiction" },  
                 };
 
 
@@ -122,6 +210,7 @@ namespace ShoppingCart
                         Console.WriteLine("----------BROWSE----------");
                         Console.WriteLine("1 - Show List");
                         Console.WriteLine("2 - Search Book");
+                        Console.WriteLine("3 - Search Category");
                         Console.Write("Choose an option: ");
                         string browseoption = Console.ReadLine();
                         int browsechoice;
@@ -144,6 +233,11 @@ namespace ShoppingCart
                                     Console.WriteLine("----------SEARCH BOOKS----------"); 
                                     Product.BookSearch(books);
                                     break;
+
+                                case 3:
+                                    Console.WriteLine("----------SEARCH CATEGORY----------");
+                                    Product.CategorySearch(books); 
+                                break;
                         }
                         break;
                         
@@ -267,7 +361,8 @@ namespace ShoppingCart
                             if (fixeditem == fixedamount)
                             {
                                 Console.WriteLine("Cart is full.\n");
-                                while (true)
+                                bool exitCartMenu = false;
+                                while (!exitCartMenu)
                                 {
                                     //Cart Management Menu
                                     Console.WriteLine("1 - View Cart");
@@ -281,108 +376,107 @@ namespace ShoppingCart
                                     int.TryParse(optiontwo, out choicetwo);
                                     Console.WriteLine();
 
-                                    switch (choicetwo)
-                                    {
-                                        //View the books in the cart
-                                        case 1:
-                                            Console.WriteLine("Your Cart:");
-                                            foreach (var item in fixedCart)
-                                            {
-                                                if (item != null)
+                                        switch (choicetwo)
+                                        {
+                                            //View the books in the cart
+                                            case 1:
+                                                Console.WriteLine("Your Cart:");
+                                                foreach (var item in fixedCart)
                                                 {
-                                                    Console.WriteLine($"{item.Quantity}x || Book ID: {item.Item.ID} - {item.Item.Name} ${item.Item.Price} = ${item.TotalPrice()}");
-                                                }
-                                            }
-                                            Console.WriteLine();
-                                            break;
-
-                                        //Remove a book from the cart 
-                                        case 2:
-                                            Console.Write("Enter the ID of the book you want to remove: ");
-                                            string removeID = Console.ReadLine();
-                                            int removeBookID;
-                                            if (!int.TryParse(removeID, out removeBookID))
-                                            {
-                                                Console.WriteLine("Invalid input. Enter a valid book ID.");
-                                                continue;
-                                            }
-
-                                            Cart bookToRemove = null;
-                                            foreach (var item in fixedCart)
-                                            {
-                                                if (item != null && item.Item.ID == removeBookID)
-                                                {
-                                                    bookToRemove = item;
-                                                    break;
-                                                }
-                                            }
-
-                                            if (bookToRemove != null)
-                                            {
-                                                bookToRemove.Item.RemainingStock += bookToRemove.Quantity;
-                                                for (int i = 0; i < fixedCart.Length; i++)
-                                                {
-                                                    if (fixedCart[i] == bookToRemove)
+                                                    if (item != null)
                                                     {
-                                                        fixedCart[i] = null;
-                                                        break;
+                                                        Console.WriteLine($"{item.Quantity}x || Book ID: {item.Item.ID} - {item.Item.Name} ${item.Item.Price} = ${item.TotalPrice()}");
                                                     }
                                                 }
-                                                Console.WriteLine($"Removed '{bookToRemove.Item.Name}' from the cart.\n");
-                                            }
-
-                                            else
-                                            {
-                                                Console.WriteLine("Book ID not found in the cart.\n");
-                                            }
-
-                                            break;
-
-                                        //Allows the user to update the quantity of a book in the cart
-                                        case 3:
-                                            Console.Write("Enter the ID of the book you want to update: ");
-
-                                            if (!int.TryParse(Console.ReadLine(), out int updateBookID))
-                                            {
-                                                Console.WriteLine("Invalid input. Enter a valid number.\n");
+                                                Console.WriteLine();
                                                 break;
-                                            }
 
-                                            bool found = false;
-
-                                            foreach (var item in fixedCart)
-                                            {
-                                                if (item != null && item.Item.ID == updateBookID)
+                                            //Remove a book from the cart 
+                                            case 2:
+                                                Console.Write("Enter the ID of the book you want to remove: ");
+                                                string removeID = Console.ReadLine();
+                                                int removeBookID;
+                                                if (!int.TryParse(removeID, out removeBookID))
                                                 {
-                                                    int newbookQTY;
-                                                    while (true)
+                                                    Console.WriteLine("Invalid input. Enter a valid book ID.");
+                                                    continue;
+                                                }
+
+                                                Cart bookToRemove = null;
+                                                foreach (var item in fixedCart)
+                                                {
+                                                    if (item != null && item.Item.ID == removeBookID)
                                                     {
-                                                        Console.Write($"Enter new quantity for '{item.Item.Name}': ");
-                                                        if (!int.TryParse(Console.ReadLine(), out newbookQTY) || newbookQTY <= 0)
-                                                        {
-                                                            Console.WriteLine("Invalid quantity.\n");
-                                                            continue;
-                                                        }
+                                                        bookToRemove = item;
                                                         break;
                                                     }
-                                                    item.Quantity = newbookQTY;
-                                                    Console.WriteLine("Quantity updated.\n");
+                                                }
 
-                                                    found = true;
+                                                if (bookToRemove != null)
+                                                {
+                                                    bookToRemove.Item.RemainingStock += bookToRemove.Quantity;
+                                                    for (int i = 0; i < fixedCart.Length; i++)
+                                                    {
+                                                        if (fixedCart[i] == bookToRemove)
+                                                        {
+                                                            fixedCart[i] = null;
+                                                            break;
+                                                        }
+                                                    }
+                                                    Console.WriteLine($"Removed '{bookToRemove.Item.Name}' from the cart.\n");
+                                                }
+
+                                                else
+                                                {
+                                                    Console.WriteLine("Book ID not found in the cart.\n");
+                                                }
+
+                                                break;
+
+                                            //Allows the user to update the quantity of a book in the cart
+                                            case 3:
+                                                Console.Write("Enter the ID of the book you want to update: ");
+
+                                                if (!int.TryParse(Console.ReadLine(), out int updateBookID))
+                                                {
+                                                    Console.WriteLine("Invalid input. Enter a valid number.\n");
                                                     break;
                                                 }
-                                            }
 
-                                            if (!found)
-                                            {
-                                                Console.WriteLine("Book ID not found in cart.\n");
-                                            }
+                                                bool found = false;
 
-                                            break;
+                                                foreach (var item in fixedCart)
+                                                {
+                                                    if (item != null && item.Item.ID == updateBookID)
+                                                    {
+                                                        int newbookQTY;
+                                                        while (true)
+                                                        {
+                                                            Console.Write($"Enter new quantity for '{item.Item.Name}': ");
+                                                            if (!int.TryParse(Console.ReadLine(), out newbookQTY) || newbookQTY <= 0)
+                                                            {
+                                                                Console.WriteLine("Invalid quantity.\n");
+                                                                continue;
+                                                            }
+                                                            break;
+                                                        }
+                                                        item.Quantity = newbookQTY;
+                                                        Console.WriteLine("Quantity updated.\n");
 
-                                        case 4:
-                                            while (true)
-                                            {
+                                                        found = true;
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (!found)
+                                                {
+                                                    Console.WriteLine("Book ID not found in cart.\n");
+                                                }
+                                                break;
+
+                                            //Clears the cart fully
+                                            case 4:
+
                                                 Console.Write("Are you sure you want to empty the cart? (Y/N): ");
                                                 string precaution = Console.ReadLine();
 
@@ -396,12 +490,11 @@ namespace ShoppingCart
                                                             fixedCart[i] = null;
 
                                                             Console.WriteLine("Cart has been emptied.\n");
+                                                            break;
                                                         }
-
                                                     }
-                                                    break;
-                                                }
 
+                                                }
 
                                                 else if (precaution == "N" || precaution == "n")
                                                 {
@@ -414,84 +507,88 @@ namespace ShoppingCart
                                                     Console.WriteLine("Invalid input. Only choose between 'Y' or 'N'.\n");
                                                     continue;
                                                 }
-                                            }
-                                            break;
+                                                break;
 
-                                        case 5:
-                                            // Proceed to checkout only after cart is full
-                                            double totalPriceFixed = 0;
-                                            Console.WriteLine("\nYour Cart:");
-                                            Console.WriteLine();
-                                            Console.WriteLine("-----RECEIPT-----");
-                                            foreach (var item in fixedCart)
+                                            case 5:
+                                                // Proceed to checkout only after cart is full
+                                                double totalPriceFixed = 0;
+                                                Console.WriteLine("\nYour Cart:");
+                                                Console.WriteLine();
+                                                Console.WriteLine("-----RECEIPT-----");
+                                                foreach (var item in fixedCart)
+                                                {
+                                                    if (item == null) continue;
+                                                    double totalitem = item.Item.Price * item.Quantity;
+                                                    totalPriceFixed += totalitem;
+                                                    Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
+                                                }
+
+                                                // Applies a 10% discount if the total price of the cart is 5000 or more.
+                                                if (totalPriceFixed >= 5000)
+                                                {
+                                                    Console.WriteLine($"\nTotal Price: ${totalPriceFixed}");
+                                                    Console.WriteLine("Congratulations! You have received a 10% discount for spending $5000 or more.");
+
+                                                    double discountfixed = totalPriceFixed * 0.10;
+                                                    double discountedPricefixed = totalPriceFixed - discountfixed;
+
+                                                    Console.WriteLine($"\nDiscount: ${discountfixed}");
+                                                    Console.WriteLine($"Discounted Price: ${discountedPricefixed}");
+                                                }
+
+                                                else
+                                                {
+                                                    Console.WriteLine($"Total Price: ${totalPriceFixed}");
+                                                }
+
+                                                //Update the stock of the books after checkout and shows the remaining stock of each book.
+                                                Console.WriteLine("\nUpdated Stock of Books");
+                                                foreach (var book in books)
+                                                {
+                                                    Console.WriteLine($"Book ID: {book.ID}, Title: {book.Name}, Remaining Stock: {book.RemainingStock}");
+
+                                                    if (book.RemainingStock <= 5)
+                                                    {
+                                                        Console.WriteLine($"{book.Name} has only {book.RemainingStock} remaining. Restock needed");
+                                                    }
+                                                }
+
+                                            ///Ask the user if they want to continue shopping or exit the program after checkout.
+                                            while (true)
                                             {
-                                                if (item == null) continue;
-                                                double totalitem = item.Item.Price * item.Quantity;
-                                                totalPriceFixed += totalitem;
-                                                Console.WriteLine($"{item.Quantity}x {item.Item.Name} {item.Item.Price} = ${totalitem}");
-                                            }
+                                                Console.Write("\nContinue shopping? (Y/N): ");
+                                                string answer = Console.ReadLine();
 
-                                            // Applies a 10% discount if the total price of the cart is 5000 or more.
-                                            if (totalPriceFixed >= 5000)
-                                            {
-                                                Console.WriteLine($"\nTotal Price: ${totalPriceFixed}");
-                                                Console.WriteLine("Congratulations! You have received a 10% discount for spending $5000 or more.");
+                                                if (answer == "Y" || answer == "y")
+                                                {
+                                                    Console.WriteLine();
+                                                    exitCartMenu = true;
+                                                    break;
+                                                }
 
-                                                double discountfixed = totalPriceFixed * 0.10;
-                                                double discountedPricefixed = totalPriceFixed - discountfixed;
+                                                else if (answer == "N" || answer == "n")
+                                                {
+                                                    Console.WriteLine("Thank you. Come Again!");
+                                                    Environment.Exit(0);
+                                                    break;
+                                                }
 
-                                                Console.WriteLine($"\nDiscount: ${discountfixed}");
-                                                Console.WriteLine($"Discounted Price: ${discountedPricefixed}");
-                                            }
-
-                                            else
-                                            {
-                                                Console.WriteLine($"Total Price: ${totalPriceFixed}");
-                                            }
-
-                                            //Update the stock of the books after checkout and shows the remaining stock of each book.
-                                            Console.WriteLine("\nUpdated Stock of Books");
-                                            foreach (var book in books)
-                                            {
-                                                Console.WriteLine($"Book ID: {book.ID}, Title: {book.Name}, Remaining Stock: {book.RemainingStock}");
+                                                else
+                                                {
+                                                    Console.WriteLine("Invalid input. Only choose between 'Y' or 'N'.");
+                                                    continue;
+                                                }
                                             }
                                             break;
 
                                         default:
-                                            Console.WriteLine("Invalid input. Please enter a valid option.\n");
-                                            break;
-                                    }
+                                                Console.WriteLine("Invalid input. Please enter a valid option.\n");
+                                                break;
 
-                                    //Ask the user if they want to continue shopping or exit the program after checkout.
-                                    while (true)
-                                    {
-                                        Console.Write("\nContinue shopping? (Y/N): ");
-                                        string answer = Console.ReadLine();
-
-                                        if (answer == "Y" || answer == "y")
-                                        {
-                                            Console.WriteLine();
-                                            break;
                                         }
-
-                                        else if (answer == "N" || answer == "n")
-                                        {
-                                            Console.WriteLine("Thank you. Come Again!");
-                                            loop = -1;
-                                            break;
-                                        }
-
-                                        else
-                                        {
-                                            Console.WriteLine("Invalid input. Only choose between 'Y' or 'N'.");
-                                            continue;
-                                        }
-                                    }
-                                    break;
                                 }
                             }
                         }
-                        
                         break;
 
                     //Exits the program
