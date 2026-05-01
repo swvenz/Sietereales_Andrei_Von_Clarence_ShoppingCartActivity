@@ -3,6 +3,11 @@ Continuation of the Shopping Cart Program.
 - Flowchart has been properly named.
 - Addressed comments for fixing and correcting the program
 - Added a "Cart Management Menu" after the cart is full.
+- Added Product Search function
+- Added Category Search for books
+- Added alert for low stock
+- Added Checkout Payment Validation
+- Updated Receipt details 
 
 ## AI Usage:
 I only use AI for assistance and explanation on how to fix the code and to better understand the codes functionality and structure.
